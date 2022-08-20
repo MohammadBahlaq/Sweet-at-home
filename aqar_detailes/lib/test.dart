@@ -43,6 +43,21 @@ class _TestState extends State<Test> {
     print('Loaded file Name is : ${_files!.length}');
   }
 
+  void TestList(List s) {
+    print("List length : ${s.length}");
+    print("List 1 : $s");
+    for (int i = 0; i < s.length; i++) {
+      s[i] = s[i] + 1;
+    }
+    print("List 2 : $s");
+  }
+
+  void TestVar(var i) {
+    print("var 1 : $i");
+    i += 2;
+    print("var 2 : $i");
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -54,7 +69,19 @@ class _TestState extends State<Test> {
             children: [
               ElevatedButton(
                 onPressed: () async {
-                  await _openFileExplorer();
+                  //await _openFileExplorer();
+
+                  List m = [1, 2, 3, 4];
+                  TestList(m);
+                  print("List 3m : $m");
+
+                  List b = [1, 2, 3, 4, 5];
+                  D.TestList(b);
+                  print("List 3b : $b");
+
+                  // var x = 5;
+                  // TestVar(x);
+                  // print("var 3 : $x");
                 },
                 child: Text("Select Images"),
               ),
@@ -111,5 +138,16 @@ class _TestState extends State<Test> {
         ),
       ),
     );
+  }
+}
+
+class D {
+  static void TestList(List s) {
+    print("List length : ${s.length}");
+    print("List 1 : $s");
+    for (int i = 0; i < s.length; i++) {
+      s[i] = s[i] + 1;
+    }
+    print("List 2 : $s");
   }
 }

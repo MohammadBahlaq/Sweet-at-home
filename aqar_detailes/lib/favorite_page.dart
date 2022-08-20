@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, avoid_single_cascade_in_expression_statements, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, avoid_single_cascade_in_expression_statements, prefer_const_literals_to_create_immutables, avoid_print
 
 import 'package:aqar_detailes/data.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -158,11 +158,13 @@ class _FavoriteState extends State<Favorite> {
         itemCount: Data.FinalFavorite.length,
         itemBuilder: (context, i) {
           return Dismissible(
-            key: UniqueKey(), //Key("$i")
+            key: UniqueKey(), // Key("$i")
             background: Container(color: Colors.red),
             onDismissed: (direction) async {
+              print("${Data.FinalFavorite.length}");
               await deleteFavorite(i);
               Data.FinalFavorite.removeAt(i);
+              print("${Data.FinalFavorite.length}");
             },
             child: InkWell(
               child: Card(
@@ -182,6 +184,8 @@ class _FavoriteState extends State<Favorite> {
                 await getOwnerInfo(Data.FinalFavorite[i]['PublisherID']);
                 setState(() {
                   Data.DetailesRE.clear();
+                  print("i : $i");
+                  print("${Data.FinalFavorite[i]}");
                   Data.DetailesRE.add(Data.FinalFavorite[i]);
                   Data.pageFrom = "f";
                   Navigator.of(context).pushNamed('detailes');

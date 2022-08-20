@@ -9,24 +9,33 @@ class ImgSlider extends StatefulWidget {
 }
 
 class _ImgSliderState extends State<ImgSlider> {
+  bool backColor = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: backColor ? Colors.black : Colors.white,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
-      body: Center(
-        child: PageView.builder(
-          itemCount: Data.Images.length,
-          itemBuilder: (context, i) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Data.ImagesSlider[i],
-            );
-          },
+      body: InkWell(
+        child: Center(
+          child: PageView.builder(
+            itemCount: Data.Images.length,
+            itemBuilder: (context, i) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Data.ImagesSlider[i],
+              );
+            },
+          ),
         ),
+        onTap: () {
+          setState(() {
+            backColor = !backColor;
+          });
+        },
       ),
     );
   }

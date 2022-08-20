@@ -30,7 +30,7 @@ class Data {
   static List<Widget> Images = [];
   static List<Widget> ImagesSlider = [];
   static String pageFrom = "r";
-  static String addEdit = "add";
+  //static String addEdit = "add";
 
   //BottomNavigationBar
   static int currentIndex = 0;
@@ -56,6 +56,10 @@ class Data {
   static List ownerRealEstate = [];
   static List FinalOwnerRealEstate = [];
   static List Review = [];
+  //Location
+  static double lat = 0.0;
+  static double lng = 0.0;
+  static bool isDragable = false;
 
   static void getFinalResults() {
     FinalResults.clear();
@@ -145,9 +149,9 @@ class Data {
 
     for (int i = 0; i < UserRealEstate.length; i++) {
       if (UserRealEstate[i]['RID'] == RID) {
-        if (UserRealEstate[i]['ImageName'] == "logo.png") {
+        /*if (UserRealEstate[i]['ImageName'] == "logo.png") {
           return;
-        }
+        }*/
         Images.add(Image.network(
             "${Data.imgPath}${UserRealEstate[i]['ImageName']}",
             fit: BoxFit.fill));

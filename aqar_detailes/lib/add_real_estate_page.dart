@@ -4,6 +4,7 @@ import 'package:aqar_detailes/data.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:string_validator/string_validator.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
@@ -33,6 +34,8 @@ class _AddPropertyState extends State<AddProperty> {
   ///////////////////////////////////////////////////////////////////////////////
   GlobalKey<ScaffoldState> snakBar = GlobalKey<ScaffoldState>();
   int rid = 0;
+  int ridfk = 0;
+
   Future<void> AddRealEstate() async {
     String url = "${Data.apiPath}insert_realEstate.php";
 
@@ -47,6 +50,8 @@ class _AddPropertyState extends State<AddProperty> {
         "price": price.text,
         "space": area.text,
         "governorate": Datselected,
+        "lat": "${Data.lat}",
+        "lng": "${Data.lng}",
         "realestatetype": ct,
         "description": Description.text,
         "publisherid": "${Data.userInfo[0]['UID']}",
@@ -54,8 +59,10 @@ class _AddPropertyState extends State<AddProperty> {
     );
     var responsbody = response.body.toString();
     rid = int.parse(responsbody);
+
     print("responsbody: $responsbody");
     print("id: $rid");
+
     if (_files!.isNotEmpty) {
       for (int i = 0; i < _files!.length; i++) {
         await AddRealEstateImages(_files![i].name, rid);
@@ -78,10 +85,11 @@ class _AddPropertyState extends State<AddProperty> {
 
   Future<void> EditRealEstate() async {
     String url = "${Data.apiPath}update_realEstate.php";
-    print("ct: $ct");
+    //print("ct: $ct");
     var response = await http.post(
       Uri.parse(url),
       body: {
+        "ridfk": "$ridfk",
         "title": title.text,
         "nbedrooms": "$Nr",
         "nbathrooms": "$NBr",
@@ -90,6 +98,8 @@ class _AddPropertyState extends State<AddProperty> {
         "price": price.text,
         "space": area.text,
         "governorate": Datselected,
+        "lat": "${Data.lat}",
+        "lng": "${Data.lng}",
         "realEstatetype": ct,
         "description": Description.text,
         "rid": "${Data.DetailesRE[0]['RID']}",
@@ -131,10 +141,13 @@ class _AddPropertyState extends State<AddProperty> {
         .files;
     for (int i = 0; i < _files!.length; i++) {
       await uploadFile(i);
+
       print("ImageName: " + _files![i].name);
-      if (Data.addEdit == "edit") {
+
+      if (Data.currentIndex == 2) {
         if (i == 0) {
           Data.Images.clear();
+          ridfk = Data.DetailesRE[0]['RID'];
         }
         Data.Images.add(Image.network("${Data.imgPath}${_files![i].name}"));
       }
@@ -142,6 +155,45 @@ class _AddPropertyState extends State<AddProperty> {
     setState(() {});
 
     print('Loaded file Name is : ${_files!.length}');
+  }
+
+  Future<void> getLocation() async {
+    bool services = await Geolocator.isLocationServiceEnabled();
+
+    if (services == false) {
+      AwesomeDialog(
+        context: context,
+        btnOkOnPress: () {},
+        desc: "Turn on Location Please",
+        dialogType: DialogType.WARNING,
+      )..show();
+    }
+
+    LocationPermission permision = await Geolocator.checkPermission();
+
+    if (permision == LocationPermission.denied) {
+      permision = await Geolocator.requestPermission();
+
+      if (permision != LocationPermission.denied) {
+        Position currentLocation =
+            await Geolocator.getCurrentPosition().then((value) => value);
+        Data.lat = currentLocation.latitude;
+        Data.lng = currentLocation.longitude;
+        print("=========================================");
+        print("Lat: ${Data.lat}");
+        print("Lng: ${Data.lng}");
+        print("=========================================");
+      }
+    } else {
+      Position currentLocation =
+          await Geolocator.getCurrentPosition().then((value) => value);
+      Data.lat = currentLocation.latitude;
+      Data.lng = currentLocation.longitude;
+      print("=========================================");
+      print("Lat: ${Data.lat}");
+      print("Lng: ${Data.lng}");
+      print("=========================================");
+    }
   }
 
   @override
@@ -156,9 +208,17 @@ class _AddPropertyState extends State<AddProperty> {
 
       price.text = "${Data.DetailesRE[0]['Price']}";
       area.text = "${Data.DetailesRE[0]['Space']}";
+
       Datselected = "${Data.DetailesRE[0]['Governorate']}";
+      Data.lat = Data.DetailesRE[0]['Lat'];
+      Data.lng = Data.DetailesRE[0]['Lng'];
+
       ct = "${Data.DetailesRE[0]['RealEstateType']}";
       Description.text = "${Data.DetailesRE[0]['Description']}";
+    }
+    if (Data.currentIndex == 3) {
+      Data.isDragable = true;
+      getLocation();
     }
 
     super.initState();
@@ -725,6 +785,13 @@ class _AddPropertyState extends State<AddProperty> {
                               },
                             ),
                             sizeBox(),
+                            ElevatedButton.icon(
+                              icon: Icon(Icons.place_outlined),
+                              label: Text("Select Location"),
+                              onPressed: () async {
+                                Navigator.of(context).pushNamed("map");
+                              },
+                            ),
 //////////////////////////////////////////////////////////////////////////////////////////////////END
                             Padding(
                                 padding: EdgeInsets.only(top: 20, bottom: 30),
@@ -744,21 +811,24 @@ class _AddPropertyState extends State<AddProperty> {
                                               .validate()) {
 //////////////////////////////////////////////////////////////////////////////////////////////////START
 
-                                            /*print('Add complete');
-                                      print("Title: " + title.text);
-                                      print("nbedrooms: " + Nr);
-                                      print("nbathrooms: " + NBr);
-                                      print("nkitchens: " + Nk);
-                                      print("nlivingrooms: " + Ns);
-                                      print("price: " + price.text);
-                                      print("space: " + area.text);
-                                      print("governorate: " + Datselected);
-                                      print("realestatetype: " + ct);
-                                      print("description: " + Description.text);
-                                      print(
-                                          "publisherid: ${Data.userInfo[0]['UID']}");*/
-                                            //await AddRealEstate();
+                                            print('Add complete');
+                                            print("Title: " + title.text);
+                                            print("nbedrooms: $Nr");
+                                            print("nbathrooms: $NBr");
+                                            print("nkitchens: $Nk");
+                                            print("nlivingrooms: $Ns");
+                                            print("price: " + price.text);
+                                            print("space: " + area.text);
+                                            print(
+                                                "governorate: " + Datselected);
+                                            print("realestatetype: " + ct);
+                                            print("description: " +
+                                                Description.text);
+                                            print(
+                                                "publisherid: ${Data.userInfo[0]['UID']}");
                                             print("ct: $ct");
+                                            print("Lat: ${Data.lat}");
+                                            print("Lng: ${Data.lng}");
                                             if (Data.currentIndex == 3) {
                                               await AddRealEstate();
                                             } else {

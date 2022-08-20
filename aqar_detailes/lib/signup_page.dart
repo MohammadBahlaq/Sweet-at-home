@@ -89,25 +89,26 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 25, 20, 4),
                       child: TextFormField(
-                          controller: userName,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your name';
-                            } else if (!isAlpha(value)) {
-                              return 'Only Letters Please';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                              hintTextDirection: TextDirection.ltr,
-                              labelText: 'Name',
-                              labelStyle: TextStyle(fontSize: 20),
-                              filled: true,
-                              fillColor: Colors.grey[200],
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              prefixIcon: Icon(Icons.person),
-                              hintText: 'Name')),
+                        controller: userName,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your name';
+                          } else if (!isAlpha(value.replaceAll(" ", ""))) {
+                            return 'Only Letters Please';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            hintTextDirection: TextDirection.ltr,
+                            labelText: 'Name',
+                            labelStyle: TextStyle(fontSize: 20),
+                            filled: true,
+                            fillColor: Colors.grey[200],
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20)),
+                            prefixIcon: Icon(Icons.person),
+                            hintText: 'Name'),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 5, 20, 4),

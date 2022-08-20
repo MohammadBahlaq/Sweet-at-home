@@ -26,8 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
     color: Color(0xff4c5166),
   );
 ////////////////////////////////////////////////////////////////////////////////
-  GlobalKey<FormState> formState = new GlobalKey<FormState>();
-  TextEditingController emailControler = new TextEditingController();
+  GlobalKey<FormState> formState = GlobalKey<FormState>();
+  TextEditingController emailControler = TextEditingController();
   TextEditingController passwordControler = TextEditingController();
 
   Future<void> loginApi() async {

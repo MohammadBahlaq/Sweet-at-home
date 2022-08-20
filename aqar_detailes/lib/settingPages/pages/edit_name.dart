@@ -68,7 +68,7 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your first name';
-                              } else if (!isAlpha(value)) {
+                              } else if (!isAlpha(value.replaceAll(" ", ""))) {
                                 return 'Only Letters Please';
                               }
                               return null;
@@ -86,7 +86,8 @@ class EditNameFormPageState extends State<EditNameFormPage> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your last name';
-                              } else if (!isAlpha(value)) {
+                              }
+                              if (!isAlpha(value.replaceAll(" ", ""))) {
                                 return 'Only Letters Please';
                               }
                               return null;

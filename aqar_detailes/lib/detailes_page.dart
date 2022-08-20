@@ -3,6 +3,7 @@
 import 'package:aqar_detailes/data.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -47,6 +48,7 @@ class _DetailesState extends State<Detailes> {
 
   @override
   void initState() {
+    Data.isDragable = false;
     if (Data.pageFrom == "f") {
       Data.getFavoriteImages(Data.DetailesRE[0]['RID']);
     } else if (Data.pageFrom == "r") {
@@ -193,21 +195,30 @@ class _DetailesState extends State<Detailes> {
                                 Padding(
                                   padding: EdgeInsets.only(top: 8),
                                   child: Text(
-                                    "${Data.DetailesRE[0]['RealEstateType']}", //For Sale
+                                    "${Data.DetailesRE[0]['RealEstateType']}",
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                Row(children: [
-                                  Icon(Icons.place),
-                                  Text(
-                                      "${Data.DetailesRE[0]['Governorate']}") //Amman
-                                ]),
+                                InkWell(
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.place),
+                                      Text(
+                                          "${Data.DetailesRE[0]['Governorate']}"),
+                                    ],
+                                  ),
+                                  onTap: () async {
+                                    Data.lat = Data.DetailesRE[0]['Lat'];
+                                    Data.lng = Data.DetailesRE[0]['Lng'];
+                                    Navigator.of(context).pushNamed("map");
+                                  },
+                                ),
                               ],
                             ),
                             Text(
-                              "${Data.DetailesRE[0]['Price']}JD", //300
+                              "${Data.DetailesRE[0]['Price']}JD",
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.brown,

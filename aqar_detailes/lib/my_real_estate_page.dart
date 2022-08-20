@@ -23,8 +23,11 @@ class _MyRealEstateState extends State<MyRealEstate> {
     m = Center(child: CircularProgressIndicator());
 
     var response = await http.get(Uri.parse(url));
+
     var responsebody = jsonDecode(response.body);
+
     Data.UserRealEstate.addAll(responsebody);
+
     if (Data.UserRealEstate.isNotEmpty) {
       Data.getFinalUserRealEstate();
       m = body();
@@ -43,6 +46,9 @@ class _MyRealEstateState extends State<MyRealEstate> {
     var response = await http.get(Uri.parse(url));
     var responsebody = jsonDecode(response.body);
     Data.ownerInfo.addAll(responsebody);
+    // Data.ownerInfo.addAll(Data.userInfo);
+    // print("UserInfo: ${Data.userInfo}");
+    // print("OwnerInfo: ${Data.ownerInfo}");
   }
 
   Future<void> deletRealEstate(int index) async {
@@ -58,6 +64,8 @@ class _MyRealEstateState extends State<MyRealEstate> {
 
   @override
   void initState() {
+    Set x = {1, 1, 2, 3, 4, 5};
+    print(x);
     if (Data.isLogin) {
       getMyRealEstate();
     } else {
@@ -132,6 +140,15 @@ class _MyRealEstateState extends State<MyRealEstate> {
 
   Widget notLogin() {
     return Center(
+      // StreamBuilder(
+      //   stream: stream,
+      //   initialData: initialData,
+      //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+      //     return Container(
+      //       child: child,
+      //     );
+      //   },
+      // ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -210,60 +227,63 @@ class _MyRealEstateState extends State<MyRealEstate> {
                         ),
                       ),
                       Expanded(
-                          child: ElevatedButton(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Icon(Icons.delete),
-                            Text("Delete"),
-                          ],
+                        child: ElevatedButton(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Icons.delete),
+                              Text("Delete"),
+                            ],
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.red,
+                          ),
+                          onPressed: () {
+                            AwesomeDialog(
+                              context: context,
+                              dialogType: DialogType.QUESTION,
+                              animType: AnimType.SCALE,
+                              btnOkColor: Colors.brown,
+                              title: 'Are you sure ?',
+                              desc: 'Are you sure you want to Delete?',
+                              btnOkText: "Delete",
+                              btnCancelOnPress: () {},
+                              btnOkOnPress: () async {
+                                await deletRealEstate(i);
+                                Data.FinalUserRealEstate.removeAt(i);
+                              },
+                            )..show();
+                          },
                         ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.red,
-                        ),
-                        onPressed: () {
-                          AwesomeDialog(
-                            context: context,
-                            dialogType: DialogType.QUESTION,
-                            animType: AnimType.SCALE,
-                            btnOkColor: Colors.brown,
-                            title: 'Are you sure ?',
-                            desc: 'Are you sure you want to Delete?',
-                            btnOkText: "Delete",
-                            btnCancelOnPress: () {},
-                            btnOkOnPress: () async {
-                              await deletRealEstate(i);
-                              Data.FinalUserRealEstate.removeAt(i);
-                            },
-                          )..show();
-                        },
-                      )),
+                      ),
                       SizedBox(width: 10),
                       Expanded(
-                          child: ElevatedButton(
-                        onPressed: () async {
-                          Data.DetailesRE.clear();
-                          Data.DetailesRE.add(Data.FinalUserRealEstate[i]);
-                          await Data.getImagesUserRealEstate(
-                              Data.FinalUserRealEstate[i]['RID']);
-                          print("${Data.Images.length}");
-                          Data.addEdit = "edit";
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            Data.DetailesRE.clear();
+                            Data.DetailesRE.add(Data.FinalUserRealEstate[i]);
+                            await Data.getImagesUserRealEstate(
+                                Data.FinalUserRealEstate[i]['RID']);
+                            print("${Data.Images.length}");
+                            Data.isDragable = true;
+                            //Data.addEdit = "edit";
 
-                          print(
-                              "Governorate: ${Data.DetailesRE[0]['Governorate']}");
-                          print(
-                              "RealEstateType: ${Data.DetailesRE[0]['RealEstateType']}");
+                            print(
+                                "Governorate: ${Data.DetailesRE[0]['Governorate']}");
+                            print(
+                                "RealEstateType: ${Data.DetailesRE[0]['RealEstateType']}");
 
-                          Navigator.of(context).pushNamed("add");
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text("Edit"),
-                            Icon(Icons.edit),
-                          ],
+                            Navigator.of(context).pushNamed("add");
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text("Edit"),
+                              Icon(Icons.edit),
+                            ],
+                          ),
                         ),
-                      )),
+                      ),
                     ],
                   ),
                 ],

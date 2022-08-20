@@ -92,6 +92,9 @@ class _EditPassFormPageState extends State<EditPassFormPage> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your New Password.';
                             }
+                            if (value.length < 8) {
+                              return "Please enter at least 8 character";
+                            }
                             return null;
                           },
                           decoration: InputDecoration(

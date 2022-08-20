@@ -16,11 +16,10 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  Widget leading = Icon(Icons.apartment);
-  Widget title = Text("Results");
   String? email = "";
   String? password = "";
-  getPrefs() async {
+
+  Future<void> getPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     email = prefs.getString("email");

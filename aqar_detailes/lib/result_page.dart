@@ -39,6 +39,9 @@ class _ResultState extends State<Result> {
     //print("Results >>>${Data.Results}");
 
     if (Data.Results.isNotEmpty) {
+      Map m = Data.Results.first;
+      print(Data.Results.first);
+      //print(m['RID']);
       Data.getFinalResults();
       r = body();
     } else {
@@ -132,6 +135,7 @@ class _ResultState extends State<Result> {
       itemCount: Data.FinalResults.length,
       itemBuilder: (context, i) {
         return Container(
+          clipBehavior: Clip.hardEdge,
           margin: EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Colors.white,

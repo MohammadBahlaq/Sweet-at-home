@@ -3,21 +3,19 @@
 import 'package:aqar_detailes/account_page.dart';
 import 'package:aqar_detailes/add_real_estate_page.dart';
 import 'package:aqar_detailes/bottomNavBar.dart';
-import 'package:aqar_detailes/chat_page.dart';
 import 'package:aqar_detailes/detailes_page.dart';
 import 'package:aqar_detailes/img_slider_page.dart';
 import 'package:aqar_detailes/login_page.dart';
+import 'package:aqar_detailes/map_page.dart';
 import 'package:aqar_detailes/result_page.dart';
 import 'package:aqar_detailes/settingPages/pages/profile_page.dart';
 import 'package:aqar_detailes/signup_page.dart';
 import 'package:aqar_detailes/test.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'filtering_page.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
-  //WidgetsFlutterBinding.ensureInitialized();
-  //await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -27,7 +25,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -37,7 +35,7 @@ class MyApp extends StatelessWidget {
           thickness: 3,
         ),
       ),
-      home: BottomNavBar(), //Test()
+      home: BottomNavBar(),
       routes: {
         "filtering": (context) => Filtering(),
         "detailes": (context) => Detailes(),
@@ -49,7 +47,7 @@ class MyApp extends StatelessWidget {
         "add": (context) => AddProperty(),
         "signup": (context) => SignUp(),
         "slider": (context) => ImgSlider(),
-        "chat": (context) => ChatScreen(),
+        "map": (context) => MapPage(),
       },
     );
   }
