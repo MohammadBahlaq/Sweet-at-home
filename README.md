@@ -1,5 +1,5 @@
 # Sweet-at-home
-This is my first project i Flutter without using any state management
+This is my first project in Flutter without using any state management
 This app for buying ans selling real-estate
 and this is screens for this app
 
