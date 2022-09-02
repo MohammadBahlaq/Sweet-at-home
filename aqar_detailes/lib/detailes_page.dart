@@ -302,12 +302,14 @@ class _DetailesState extends State<Detailes> {
                                             right: 20,
                                             bottom: 10,
                                           ),
-                                          child: RaisedButton(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              primary: Colors.brown[400],
                                             ),
-                                            color: Colors.brown[100],
                                             child: Text("Send Massage"),
                                             onPressed: () {
                                               //Chat Code
@@ -332,10 +334,15 @@ class _DetailesState extends State<Detailes> {
                                             right: 10,
                                             bottom: 10,
                                           ),
-                                          child: RaisedButton(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10)),
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              primary: Colors.green[400],
+                                              foregroundColor: Colors.white,
+                                            ),
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
@@ -344,7 +351,6 @@ class _DetailesState extends State<Detailes> {
                                                 Text("Call"),
                                               ],
                                             ),
-                                            color: Colors.green[400],
                                             onPressed: () async {
                                               String number = Data.ownerInfo[0]
                                                   ['PhoneNumber'];
@@ -356,7 +362,6 @@ class _DetailesState extends State<Detailes> {
                                               );
                                               launchUrl(launchUri);
                                             },
-                                            textColor: Colors.white,
                                           ),
                                         ),
                                       ),

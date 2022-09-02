@@ -32,7 +32,7 @@ class _AddPropertyState extends State<AddProperty> {
   String ct = "For Sale";
 
   ///////////////////////////////////////////////////////////////////////////////
-  GlobalKey<ScaffoldState> snakBar = GlobalKey<ScaffoldState>();
+  //GlobalKey<ScaffoldState> snakBar = GlobalKey<ScaffoldState>();
   int rid = 0;
   int ridfk = 0;
 
@@ -227,7 +227,7 @@ class _AddPropertyState extends State<AddProperty> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      key: snakBar,
+      //key: snakBar,
       appBar: AppBar(
         leading: Data.currentIndex == 3 ? Icon(Icons.add) : BackButton(),
         title: Text(Data.currentIndex == 3 ? 'Add Property' : 'Edit Property'),
@@ -735,31 +735,32 @@ class _AddPropertyState extends State<AddProperty> {
                                   return null;
                                 },
                                 decoration: InputDecoration(
-                                    hintText: 'Description',
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.red,
-                                        width: 1,
-                                      ),
+                                  hintText: 'Description',
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.red,
+                                      width: 1,
                                     ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.red,
-                                        width: 1,
-                                      ),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.red,
+                                      width: 1,
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.brown,
-                                        width: 1,
-                                      ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.brown,
+                                      width: 1,
                                     ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Colors.brown,
-                                        width: 2,
-                                      ),
-                                    )),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.brown,
+                                      width: 2,
+                                    ),
+                                  ),
+                                ),
                                 controller: Description,
                                 maxLines: 4,
                               ),
@@ -857,8 +858,9 @@ class _AddPropertyState extends State<AddProperty> {
                                               backgroundColor: Colors.white,
                                               duration: Duration(seconds: 3),
                                             );
-                                            snakBar.currentState!
-                                                .showSnackBar((Bar));
+                                            //snakBar.currentState!.showSnackBar((Bar));
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(Bar);
 
 //////////////////////////////////////////////////////////////////////////////////////////////////END
                                           }
