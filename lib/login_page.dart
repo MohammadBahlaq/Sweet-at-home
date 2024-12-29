@@ -52,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: const Text("Login"),
       ),
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -62,8 +63,22 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [Colors.white, Color.fromRGBO(20, 5, 20, 4)]),
+                decoration: BoxDecoration(
+                  color: Colors.brown.shade300,
+                  // gradient: LinearGradient(
+                  //   begin: Alignment.topRight,
+                  //   end: Alignment.bottomLeft,
+                  //   colors: [
+                  //     Colors.white,
+                  //     Colors.brown.shade100,
+                  //     Colors.brown.shade200,
+                  //     Colors.brown.shade300,
+                  //     Colors.brown.shade400,
+                  //     Colors.brown.shade500,
+                  //     Colors.brown.shade600,
+                  //     Colors.brown.shade700,
+                  //   ],
+                  // ),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(right: 20, left: 20),
@@ -202,7 +217,9 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: BoxDecoration(
             color: const Color(0xffebefff),
             borderRadius: BorderRadius.circular(10),
-            boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 2))],
+            boxShadow: const [
+              BoxShadow(color: Colors.black26, blurRadius: 6, offset: Offset(0, 2)),
+            ],
           ),
           height: 60,
           child: TextFormField(

@@ -70,9 +70,18 @@ class _SignUpState extends State<SignUp> {
             Expanded(
                 child: SingleChildScrollView(
               child: Container(
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(20)),
-                    gradient: LinearGradient(begin: Alignment.topRight, end: Alignment.bottomLeft, colors: [Colors.white, Color.fromRGBO(20, 5, 20, 4)])),
+                decoration: BoxDecoration(
+                  color: Colors.brown.shade300,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(20),
+                  ),
+                  // gradient: LinearGradient(
+                  //   begin: Alignment.topRight,
+                  //   end: Alignment.bottomLeft,
+                  //   colors: [Colors.white, Color.fromRGBO(20, 5, 20, 4)],
+                  // ),
+                ),
                 child: Column(
                   children: <Widget>[
                     buildUserImage(),
